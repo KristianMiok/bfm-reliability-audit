@@ -1,0 +1,28 @@
+# credentials -- GBIF_USER / GBIF_PWD / GBIF_EMAIL live here, never commit
+.env
+
+# data: archives are large and reproducible from the download key
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+!data/interim/download_key.txt
+
+# model weights
+*.ckpt
+*.safetensors
+*.pt
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+.idea/
+.DS_Store
+.ipynb_checkpoints/
