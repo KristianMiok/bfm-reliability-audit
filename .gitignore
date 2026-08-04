@@ -26,3 +26,4 @@ dist/
 .idea/
 .DS_Store
 .ipynb_checkpoints/
+uv.lock
