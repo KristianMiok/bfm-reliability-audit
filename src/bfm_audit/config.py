@@ -9,6 +9,7 @@ extent with values taken from the model's batch metadata.
 from __future__ import annotations
 
 import json
+import dataclasses
 from dataclasses import dataclass, asdict
 from pathlib import Path
 
@@ -52,8 +53,13 @@ class ModelGrid:
     height: int = 160          # VERIFIED: train_config.yaml `H`
     width: int = 280           # VERIFIED: train_config.yaml `W`
     resolution: float = 0.25   # VERIFIED: 160 x 0.25 = 40 deg lat, 280 x 0.25 = 70 deg lon
-    lat_max: float = 74.0      # UNVERIFIED
-    lon_min: float = -25.0     # UNVERIFIED
+    # Edge values below follow from the release code of both repos (see
+    # scripts/01_extract_model_grid.py and DECISIONS.md 2026-08-10): cell
+    # centres lat 32.00..71.75, lon -25.00..44.75, padded by half a cell.
+    # The earlier guess (lat 34..74) was wrong by 2 degrees; the verified
+    # flag still gates every use, so these defaults decide nothing.
+    lat_max: float = 71.875    # derived, not yet batch-confirmed
+    lon_min: float = -25.125   # derived, not yet batch-confirmed
     verified: bool = False     # set True only by 01_extract_model_grid.py
 
     @property
@@ -79,7 +85,16 @@ class ModelGrid:
     def load(cls, path: Path = GRID_JSON) -> "ModelGrid":
         if not path.exists():
             return cls()
-        return cls(**json.loads(path.read_text()))
+        data = json.loads(path.read_text())
+        known = {f.name for f in dataclasses.fields(cls)}
+        return cls(**{k: v for k, v in data.items() if k in known})
+
+    @staticmethod
+    def provenance(path: Path = GRID_JSON) -> dict:
+        """The derivation record written next to the grid, {} if absent."""
+        if not path.exists():
+            return {}
+        return json.loads(path.read_text()).get("provenance", {})
 
 
 def require_verified_grid() -> ModelGrid:

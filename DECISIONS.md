@@ -124,6 +124,58 @@ control made these *worse* — their modern human observations report precision
 less often than their other records. Opposite of any legacy-data story.
 Probably one dominant monitoring publisher; the download will say.
 
+## G1 — where does the model grid actually sit? · **RESOLVED from release code, 2026-08-10**
+
+The scaffold shipped with a guessed extent (lat 34–74, lon −25..45) marked
+UNVERIFIED, and scripts 02/03 refused to run against it. The guess was
+**wrong by 2°**: the real window is lat 32–72. Running the download against
+the guess would have silently dropped the 32–34°N band — southern Iberia,
+Sicily, Crete, Cyprus, the Maghreb coast — and spent quota on an empty
+72–74°N band. The guard earned its keep.
+
+Resolution chain, all from public release code at current `main`
+(BioDT/bfm-data and BioDT/bfm-model, read 2026-08-10):
+
+1. **Writer constants** — `bfm-data/bfm_data/dataset_creation/batch_creation/scan_biocube.py`:
+   `GRID_LAT = round(arange(32.0, 72.0+1e-6, 0.25), 3)` (ascending, 161 pts),
+   `GRID_LON = round(arange(-25.0, 45.0+1e-6, 0.25), 3)` (ascending, 281 pts),
+   `EXPECTED_LAT, EXPECTED_LON = 161, 281`.
+2. **Writer reindex + metadata** — `build_batches_monthly.py`:
+   `ds.sel(latitude=GRID_LAT, longitude=GRID_LON)` (line ~282) puts every
+   source array on the ascending grid; `batch_metadata["latitudes"] =
+   GRID_LAT.tolist()` (line ~402) writes the same vectors. Arrays and
+   metadata therefore share one order: **ascending, row 0 = south**.
+3. **Reader crop** — `bfm-model/bfm_model/bfm/dataloader_monthly.py` with
+   `patch_size: 4` (train_config.yaml): `new_H = (161//4)*4 = 160`,
+   `new_W = (281//4)*4 = 280`; tensors `[..., :160, :280]` and metadata
+   `latitudes[:160]`, `longitudes[:280]` — same end, index 0.
+4. **Model grid**: cell centres lat 32.00..71.75, lon −25.00..44.75; the
+   writer's north row (72.00) and east column (45.00) are cropped away.
+   Cell-edge bbox: lat 31.875..71.875, lon −25.125..44.875.
+
+Independent checks: committed land mask
+`bfm-model/batch_statistics/europe_Land_2020_grid.pkl` is exactly 160×280;
+the 28 taxonKeys hard-coded in `build_batches_monthly.py` match
+`data/reference/bfm_species_keys.csv` **28/28**.
+
+**Trap documented**: `bfm-model/bfm_model/bfm/utils.py` (lat 34.25–72
+descending, lon −30..40, 152×320) and `documentation/batch_visualisation.ipynb`
+(152×320 shapes, 22 species) describe a **pre-release grid**. An older
+`bfm-data` helper (`get_lat_lon_ranges`, with `lat_range[::-1]`) belongs to
+the same legacy path. Never source coordinates from those files.
+
+**Residual risk and gate**: the batches on Hugging Face could have been
+produced by an earlier writer than today's `main`. Probability low (shapes,
+land mask, and species list all match), consequence bounded (≤ one row/column
+at the window edge for cell assignment). Therefore: `model_grid.json` carries
+`verified: true` with `provenance.method = "release-code-derivation"` and
+`confirmed_against_batch: false`. Scripts 02 (download bbox is a covering
+box; a half-cell excess is harmless) and 03 (assignment; worst case one edge
+row/column, re-checked later) may run. **No script that loads model weights
+or reads model predictions may run until `01 --batch-file` against a real
+batch has flipped `confirmed_against_batch` — which costs nothing, because
+inference requires downloading batches anyway.**
+
 ---
 
 ## Standing rules
