@@ -55,7 +55,27 @@ def build_predicate(grid: ModelGrid, year_from: int, year_to: int) -> dict:
     }
 
 
+def _load_dotenv() -> None:
+    """Populate os.environ from the repo-root .env (KEY=VALUE lines).
+
+    Values already exported win; quotes around values are stripped. Removes
+    the need for any `set -a; source .env` incantation before running 02.
+    """
+    env_file = Path(__file__).resolve().parents[2] / ".env"
+    if not env_file.exists():
+        return
+    for line in env_file.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, val = line.partition("=")
+        key, val = key.strip(), val.strip().strip("'\"")
+        if key and val and not os.environ.get(key):
+            os.environ[key] = val
+
+
 def _auth_header() -> dict:
+    _load_dotenv()
     for var in ("GBIF_USER", "GBIF_PWD", "GBIF_EMAIL"):
         if not os.environ.get(var):
             raise RuntimeError(
