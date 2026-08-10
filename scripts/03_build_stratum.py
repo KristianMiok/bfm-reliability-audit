@@ -142,7 +142,9 @@ def main() -> int:
           f"middle={int(tct.get('middle', 0)):,}  top={n_top:,}")
 
     # Publisher-map check (C13 mechanism): is the stratum just an hhi map?
-    r_hhi = ok["pct_reporting"].corr(ok["dataset_hhi"], method="spearman")
+    # Spearman = Pearson on ranks; computed directly to avoid a scipy
+    # dependency (pandas delegates method="spearman" to scipy).
+    r_hhi = ok["pct_reporting"].rank().corr(ok["dataset_hhi"].rank())
     mono_bot = (ok.loc[ok["tercile"] == "bottom", "dataset_hhi"] > 0.5).mean()
     mono_top = (ok.loc[ok["tercile"] == "top", "dataset_hhi"] > 0.5).mean()
     print(f"\npublisher concentration: Spearman(pct_reporting, hhi) = {r_hhi:+.3f}")
