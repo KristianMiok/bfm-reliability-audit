@@ -211,3 +211,54 @@ A second requirement, independent of the above: cells must not be separable by
 `dataset_hhi` alone. If low-reporting cells are simply single-publisher cells,
 the stratum is a publisher map rather than a data-quality map, and the claim
 must be stated that way.
+
+---
+
+## 2026-08-10 — pre-flight against the release paper; download decisions
+
+**G1 addendum — published confirmation.** BioAnalyst paper v2 (arXiv
+2507.09080, Table 5) states the pre-training window explicitly: Europe grid
+280 (lon) x 160 (lat), latitude bounds [32, 72], longitude bounds [-25, 45],
+time range 01-01-2000 to 01-06-2020, 233 monthly batches. The release-code
+derivation of G1 now has a published source as well.
+
+**D1 — the release paper's occurrence inventory is partly wrong.** Table 3 of
+the paper lists approximate 2000-2020 occurrence totals per species. Against
+live GBIF counts under the release's own window and bbox (script-02 predicate
+without the PRESENT clause; frozen in
+`data/reference/preflight_counts_2026-08-10.csv`):
+
+- 17 of 28 entries sit in a plausible band (ratio 0.65-1.2; the mild deficit
+  is consistent with our tighter bbox + coordinate filters).
+- Five entries are off by three to four orders of magnitude, in both
+  directions: Bombus hyperboreus 206 actual vs 325,000 claimed; Monachus
+  monachus 112 vs 137,000; Lynx pardinus 578 vs 436,000; Callosciurus
+  erythraeus 850 vs 900,000; Episyrphus balteatus 102,546 vs 10.
+- Four more are off by factors 4-14: Gulo gulo x6.2 (undercounted in the
+  paper), Caretta caretta x9.4, Canis aureus x14, Ursus arctos x3.9.
+
+Accurate and wildly wrong entries coexist side by side, which rules out a
+uniform methodological difference (different counting units would shift all
+ratios together). This is a documentation error, not — as far as counts can
+show — a training-data error: the cube archives cannot contain records that
+do not exist. Consequence for the audit: four species channels are
+ultra-sparse in reality (112-850 records over 44,800 cells x 233 months);
+per-species endpoints for these are degenerate and must be handled explicitly
+in the E2 pre-registration.
+
+**Decisions taken:**
+
+1. `OCCURRENCE_STATUS = PRESENT` added to the download predicate, mirroring
+   the WHERE clause of the documented GBIF cube template the training data
+   went through. Server-side because SIMPLE_CSV's fixed columns do not
+   guarantee occurrenceStatus for a local filter. Measured absence share
+   without the clause: 97,281 / 12,611,544 = 0.77 %.
+2. Year-2020 records past the training window (after 2020-06-01; year-2020
+   total 1,277,511) are filtered in script 03 via eventDate, since GBIF's
+   MONTH predicate cannot express "July-December of one year only".
+3. SIMPLE_CSV format approved: ~12.5 M records, ~3.2 GB zipped, locally
+   processable.
+4. `gbif.py` rewritten against the GBIF API directly (stdlib). The previous
+   pygbif path passed a prebuilt predicate dict to `occurrences.download()`,
+   which expects query strings — submission would have failed at run time.
+   pygbif removed from dependencies.
