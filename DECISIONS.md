@@ -330,3 +330,109 @@ PASS / BETWEEN / FAIL verdict with tercile cell counts and hhi publisher-map
 diagnostics. Thresholds themselves unchanged from the open criterion.
 End-to-end verified on a synthetic archive with planted tail, out-of-grid,
 and fake-radius records before first contact with real data.
+
+---
+
+## 2026-08-10 — E1 outcome: the spatial stratum criterion PASSED
+
+Download: GBIF.org (10 August 2026) Occurrence Download
+https://doi.org/10.15468/dl.ntnmuv — 12,514,271 records (index drifted +8
+from the pre-flight count taken hours earlier), SIMPLE_CSV, 1.14 GB.
+Training-window tail cut removed 541,866 records (10,534 of them year-2020
+with no month). States on the kept 11,972,405: reporting 9,879,112 (82.5%),
+unknown 2,091,212 (17.5%), fake 2,081 (0.017% — the third class is preserved
+by design but quantitatively negligible in this species set, in contrast to
+the crayfish work). Out-of-grid: 0 of 12.5M — the server-side polygon and the
+local south-up assignment agree exactly, closing the G1 loop on real data.
+
+Stratum: 18,870 occupied cells; 10,206 with >= 20 records. pct_reporting
+p10 = 1.9, p90 = 98.8, spread 96.8 vs registered 30; terciles
+3,402 / 3,402 / 3,402 vs registered 200. **VERDICT: PASS.** The distribution
+is near-bimodal (p25 19.8 -> p50 70.1 -> p75 93.9).
+
+Publisher-map check: overall Spearman(pct_reporting, hhi) = -0.067, but the
+association is U-SHAPED: median hhi bottom 0.658 (68% of cells > 0.5),
+middle 0.372 (28%), top 0.711 (64%). Both extremes are publisher-
+concentrated. Required description, per the registration: the stratum is the
+spatial projection of publisher reporting convention — the C13 mechanism made
+spatial — not a publisher-independent "quality" field. Consequence: an
+hhi < 0.5 sensitivity analysis enters G3.
+
+Density: median n_records 63 (bottom tercile) vs 422 (top), a 6.7x gradient
+aligned with the stratum. Consequence: the density control moves from a
+listed robustness check into the primary endpoint itself (stratified
+estimator, G3 item 5).
+
+---
+
+## G3 — E2 pre-registration (fixed before any model weight is loaded)
+
+Scope: group-conditional reliability audit of the released BioAnalyst
+checkpoint (HF `BioDT/bfm-pretrained`; released config has drop_rate 0.0,
+attn_drop_rate 0.0, drop_path_rate 0.1).
+
+1. **Evaluation window.** Test months only. The release splits batches
+   chronologically (`scripts/split_dataset.sh`, lexicographic, first-N
+   train) and its ablations report 13 prediction windows in the test set;
+   we register the FINAL 13 prediction windows of the 233 as evaluation
+   targets. The exact filename boundary is pinned once batches exist; any
+   deviation is logged here before a single coverage number is computed.
+   Batches are not shipped; they are rebuilt from BioCube (HF) with
+   `BioDT/bfm-data` `build_batches_monthly`, restricted to the months the
+   evaluation needs. The G1 batch-confirmation gate is discharged by
+   `01 --batch-file` on the first rebuilt batch, before inference.
+
+2. **Target and space.** The model's own training target: the temporal-
+   difference increment (td_learning), species channels, evaluated in the
+   model's normalised space (per-channel centre/scale of the release
+   statistics). Unscaled deltas and level reconstructions: descriptive only.
+
+3. **Uncertainty mechanism.** K MC forward passes with stochastic depth
+   active at inference. Registered pre-check: assert the architecture
+   contains no BatchNorm (LayerNorm has no train/eval difference and the
+   other dropout rates are 0.0, so train() touches DropPath only); if
+   BatchNorm is found, isolate DropPath modules instead. K is chosen by a
+   pilot on ONE batch outside the evaluation window: the smallest
+   K in {8, 16, 32, 64} whose per-cell sigma ranks correlate >= 0.99 with
+   K = 64; K is then frozen. The pilot is exploratory and reported as such.
+
+4. **Intervals and per-cell coverage.** Gaussian mu +/- z*sigma at nominal
+   90% (primary) and 80% (secondary), per cell x species x step. Cell
+   coverage = share of that cell's species-step predictions inside the
+   interval, species weighted equally.
+
+5. **PRIMARY endpoint (confirmatory).** Difference in mean cell coverage at
+   nominal 90% between TOP and BOTTOM stratum terciles (E1 rank-based
+   terciles), density-stratified: cells binned by quintiles of
+   log10(n_records); the gap computed within each bin; the primary statistic
+   is the bin-size-weighted mean gap. Inference: spatial block permutation —
+   10x10-cell blocks (2.5 deg), tercile labels permuted at block level,
+   10,000 permutations, two-sided, alpha = 0.05.
+
+6. **Secondary endpoints.** (a) spread-skill: Spearman(sigma, |error|),
+   overall and per tercile; (b) BAN-style discrimination: AUROC of sigma for
+   top-decile |error|, per tercile; (c) the 80% analogue of the primary;
+   (d) per-species heterogeneity across the 24 non-degenerate channels.
+
+7. **Registered sensitivity analyses.** (i) mixed-publisher cells only
+   (dataset_hhi < 0.5) — required by the E1 U-shape; (ii) cells with
+   n_records >= 50 only; (iii) fake recoded to unknown (n = 2,081,
+   negligible, registered for completeness); (iv) 5-degree latitude bands
+   replacing the density bins.
+
+8. **Ultra-sparse channels.** Monachus monachus, Lynx pardinus, Bombus
+   hyperboreus, Callosciurus erythraeus (112-850 in-window records) are
+   excluded from per-species endpoints, retained in pooled cell-level
+   endpoints, and tabulated.
+
+9. **Named outcomes, fixed now.** (1) bottom-tercile undercoverage -> the
+   reliability-gap story; (2) no significant gap -> quality-blind
+   uncertainty, publishable as a uniformity finding with the stratum and D1
+   as contributions; (3) reversed sign -> stop and investigate; no claim
+   without a mechanism.
+
+10. **Stop rules.** If sigma is degenerate (median 0, or rank instability
+    persisting at K = 64), MC-DropPath fails as a mechanism and THAT becomes
+    the finding ("the released model exposes no usable internal
+    uncertainty"); no post-hoc switch of UQ method within this paper. No
+    fourth design if the audit dies here (standing rule 4).
