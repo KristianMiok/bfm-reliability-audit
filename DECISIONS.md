@@ -262,3 +262,37 @@ in the E2 pre-registration.
    pygbif path passed a prebuilt predicate dict to `occurrences.download()`,
    which expects query strings — submission would have failed at run time.
    pygbif removed from dependencies.
+
+---
+
+## 2026-08-10 — G2 closed as bounded; row convention fixed before first stratum run
+
+**G2 — cube assignment variant: bounded unknown.** Public trail exhausted:
+the BioCube HF card ships the multimodal parquet branch, not the 28-species
+cube zips; no GBIF download DOI exists in either paper, the repositories, or
+GBIF literature tracking. A direct author query was considered and declined.
+The documented GBIF SQL cube service randomises each record inside
+COALESCE(coordinateUncertaintyInMeters, 1000 m) before cell assignment; a
+fixed-assignment variant also exists in the UDF README. The audit's
+measurements are invariant to which variant BioDT used — the stratum is
+built from raw records, and the model is audited as released — so the paper
+states both variants and confines the difference to the mechanism narrative
+(differential jitter vs fictitious precision for silent publishers).
+
+**Row convention fixed before first use.** `assign_cells` placed row 0 at
+the NORTH edge ("usual raster convention"); G1 established the model's
+tensors are ascending with row 0 at the SOUTH edge (writer reindexes onto
+ascending GRID_LAT; reader crops from index 0). Harmless for the stratum in
+isolation, fatal for the E2 index-for-index join with model outputs — the
+map would have flipped vertically, silently. Fixed to south-up; regression
+tests pin the corners; `to_raster` figures now require origin="lower".
+
+Implementation notes from the same review: the 2020-07..12 tail cut
+(decision 2) is implemented as `training_window_mask` (final-year records
+with no month are excluded and counted); GBIF TSV is parsed with QUOTE_NONE
+(the format is unquoted, stray quotes in free-text fields derail default
+parsing); script 03 now prints the pre-registered thresholds and an explicit
+PASS / BETWEEN / FAIL verdict with tercile cell counts and hhi publisher-map
+diagnostics. Thresholds themselves unchanged from the open criterion.
+End-to-end verified on a synthetic archive with planted tail, out-of-grid,
+and fake-radius records before first contact with real data.

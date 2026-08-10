@@ -11,19 +11,21 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from bfm_audit.config import ModelGrid
 from bfm_audit.grid import assign_cells, flag_reporting, cell_stratum
 
+# Verified extent (G1): cell edges, centres 32.00..71.75 x -25.00..44.75
 GRID = ModelGrid(height=160, width=280, resolution=0.25,
-                 lat_max=74.0, lon_min=-25.0, verified=True)
+                 lat_max=71.875, lon_min=-25.125, verified=True)
 
 
 def test_grid_extent():
-    assert GRID.lat_min == pytest.approx(34.0)
-    assert GRID.lon_max == pytest.approx(45.0)
+    assert GRID.lat_min == pytest.approx(31.875)
+    assert GRID.lon_max == pytest.approx(44.875)
 
 
-def test_corner_cells():
+def test_corner_cells_south_up():
+    """Row 0 = SOUTH (model tensor convention, G1); see test_stratum.py."""
     df = pd.DataFrame({
-        "decimalLatitude":  [73.9, 34.1, 60.0],
-        "decimalLongitude": [-24.9, 44.9, 10.0],
+        "decimalLatitude":  [31.9, 71.8, 60.0],
+        "decimalLongitude": [-25.1, 44.8, 10.0],
     })
     out = assign_cells(df, GRID)
     assert out.loc[0, "grid_row"] == 0 and out.loc[0, "grid_col"] == 0

@@ -26,15 +26,20 @@ def assign_cells(
 ) -> pd.DataFrame:
     """Add integer row/col indices into the model grid.
 
-    Row 0 is the northernmost band, matching the usual raster convention. Rows
-    and columns falling outside the grid are set to -1 rather than clipped, so
-    out-of-extent records are droppable rather than silently piled onto the
-    edge -- edge pile-up is exactly the kind of artefact that produces a fake
-    spatial pattern.
+    Row 0 is the SOUTHERNMOST band. This deliberately breaks the usual
+    raster convention because it matches the model: the release writer
+    reindexes every array onto an ascending latitude vector and the reader
+    crops from index 0 (G1), so tensor row 0 sits at lat 32.00. The E2 join
+    of stratum cells with model outputs is index-for-index only under this
+    convention; north-up here would silently flip the map vertically.
+    Rows and columns falling outside the grid are set to -1 rather than
+    clipped, so out-of-extent records are droppable rather than silently
+    piled onto the edge -- edge pile-up is exactly the kind of artefact
+    that produces a fake spatial pattern.
     """
     out = df.copy()
     col = np.floor((out[lon_col] - grid.lon_min) / grid.resolution)
-    row = np.floor((grid.lat_max - out[lat_col]) / grid.resolution)
+    row = np.floor((out[lat_col] - grid.lat_min) / grid.resolution)
 
     col = col.to_numpy()
     row = row.to_numpy()
@@ -74,6 +79,25 @@ def flag_reporting(
     return out
 
 
+def training_window_mask(
+    df: pd.DataFrame,
+    year_to: int = 2020,
+    month_to: int = 6,
+    year_col: str = "year",
+    month_col: str = "month",
+) -> pd.Series:
+    """True for records inside BioAnalyst's training window (<= 2020-06).
+
+    The GBIF YEAR predicate cannot express "January-June of the final year
+    only", so the download runs to the end of 2020 and the tail is cut here.
+    Final-year records with no month are excluded: they cannot be shown to
+    precede the cutoff (decision 2026-08-10, DECISIONS.md).
+    """
+    y = pd.to_numeric(df[year_col], errors="coerce")
+    m = pd.to_numeric(df[month_col], errors="coerce")
+    return (y < year_to) | ((y == year_to) & (m <= month_to))
+
+
 def cell_stratum(df: pd.DataFrame, min_records: int = 20) -> pd.DataFrame:
     """Per-cell composition: the grouping variable for the calibration audit.
 
@@ -84,16 +108,23 @@ def cell_stratum(df: pd.DataFrame, min_records: int = 20) -> pd.DataFrame:
     would manufacture a gradient out of small-sample noise.
     """
     d = df[df["in_grid"]]
-    g = d.groupby(["grid_row", "grid_col"])
 
-    out = g.agg(
-        n_records=("state", "size"),
-        n_reporting=("state", lambda s: (s == "reporting").sum()),
-        n_unknown=("state", lambda s: (s == "unknown").sum()),
-        n_fake=("state", lambda s: (s == "fake").sum()),
+    states = (
+        d.groupby(["grid_row", "grid_col", "state"], observed=True)
+        .size().unstack("state", fill_value=0)
+    )
+    for c in ("reporting", "unknown", "fake"):
+        if c not in states:
+            states[c] = 0
+    out = states.rename(columns={"reporting": "n_reporting",
+                                 "unknown": "n_unknown",
+                                 "fake": "n_fake"})
+    out["n_records"] = out[["n_reporting", "n_unknown", "n_fake"]].sum(axis=1)
+    extra = d.groupby(["grid_row", "grid_col"]).agg(
         n_species=("speciesKey", "nunique"),
         n_datasets=("datasetKey", "nunique"),
-    ).reset_index()
+    )
+    out = out.join(extra).reset_index()
 
     out["pct_reporting"] = 100 * out["n_reporting"] / out["n_records"]
     out["pct_unknown"] = 100 * out["n_unknown"] / out["n_records"]
@@ -121,6 +152,9 @@ def to_raster(cells: pd.DataFrame, value_col: str, grid: ModelGrid) -> np.ndarra
     Unoccupied cells are NaN, not zero. A cell with no occurrence records is
     not a cell with poor data quality; it is a cell the audit has nothing to
     say about, and the distinction must survive into any figure.
+
+    Row 0 of the returned array is the SOUTHERN edge (model convention, G1).
+    Plot with ``imshow(..., origin="lower")`` or the map is upside down.
     """
     arr = np.full((grid.height, grid.width), np.nan, dtype=float)
     arr[cells["grid_row"].to_numpy(), cells["grid_col"].to_numpy()] = cells[value_col]
