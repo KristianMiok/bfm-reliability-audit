@@ -436,3 +436,24 @@ attn_drop_rate 0.0, drop_path_rate 0.1).
     the finding ("the released model exposes no usable internal
     uncertainty"); no post-hoc switch of UQ method within this paper. No
     fourth design if the audit dies here (standing rule 4).
+
+---
+
+## 2026-08-11 — G3 pins: public checkpoints, primary weights, RedList gap
+
+HF weights repo ships TWO checkpoints as of today:
+`bfm-pretrained-small.safetensors` (0.78 GB) and
+`bfm-pretrain-large.safetensors` (2.84 GB). The earlier snapshot note that
+the larger model was not public is superseded. **Primary audit checkpoint:
+SMALL**, because the released training config (`train_config.yaml`:
+drop_rate 0.0, attn_drop_rate 0.0, drop_path_rate 0.1) makes stochastic
+depth the ONLY inference-time stochastic component — exactly the registered
+mechanism (G3 item 3). The large checkpoint (paper Table 7: 0.1/0.1/0.1)
+would mix ordinary and attention dropout into the samples; registered as an
+optional replication with a mixed mechanism, never the primary.
+
+BioCube on HF carries `Species/europe_species.parquet` (5.1 MB), the
+candidate distribution ground truth; schema verification logged in the repo
+history. The RedList folder listed in the BioCube README is ABSENT from the
+HF tree; whether RLI input channels can be reconstructed is determined at
+scan_biocube time and will be logged here before any inference runs.

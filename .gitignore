@@ -27,3 +27,6 @@ dist/
 .DS_Store
 .ipynb_checkpoints/
 uv.lock
+
+# external artefacts (HF downloads, reproducible)
+data/external/*
