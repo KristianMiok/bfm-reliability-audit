@@ -457,3 +457,28 @@ candidate distribution ground truth; schema verification logged in the repo
 history. The RedList folder listed in the BioCube README is ABSENT from the
 HF tree; whether RLI input channels can be reconstructed is determined at
 scan_biocube time and will be logged here before any inference runs.
+
+---
+
+## 2026-08-11 — species ground truth verified; the parquet extends to 2025-05
+
+`Species/europe_species.parquet` (BioCube HF) is confirmed as the
+distribution ground-truth table: 2,427,403 rows; columns Species (the 28
+GBIF taxonKeys exactly), Latitude/Longitude on quarter-degree cell centres
+matching the verified model grid, monthly Timestamp, integer Distribution
+(occurrence count), plus taxonomy. Rows on the cropped writer edge
+(lat 72.00 / lon 45.00) do not exist in the model tensor and are dropped at
+join time; count logged in the run output.
+
+**Finding: the table runs 2000-01 through 2025-05** — 59 months past the
+model's training window (2000-01..2020-06). This creates a genuinely
+out-of-sample evaluation period the model has never seen. Handled as a
+REGISTERED AMENDMENT CANDIDATE (A1), not a silent change: G3 item 1 keeps
+the final-13-windows holdout as registered; A1 (post-2020-06 evaluation)
+is adopted only if the ERA5 inputs on HF cover the same months, and the
+adoption (or its impossibility) is logged here before any inference runs.
+
+Cross-check of cube occurrence sums against our raw-GBIF pre-flight counts
+per species is in the run output committed with this entry; ratios below 1
+are expected (cube-side filters and aggregation), and the four ultra-sparse
+channels (D1) remain ultra-sparse here.
