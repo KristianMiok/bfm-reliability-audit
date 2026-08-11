@@ -521,3 +521,30 @@ cube's quality filter THE SAME VARIABLE as the audit stratum; (iii) cube
 snapshot age (post-snapshot publication growth). Next falsification step:
 per-species coordinate-uncertainty profile vs occ_ratio, from our own
 download.
+
+---
+
+## 2026-08-11 — D2 closed as composite depletion; ERA5 acquisition decision
+
+**D2 CLOSED: training-side depletion is real, nonrandom, and composite.**
+Per-species correlations of cube retention (occ_ratio) over the 28 species:
+%HUMAN_OBSERVATION +0.618, pct_unknown -0.580, median radius -0.509,
+pct>=10km -0.397. No single rule survives the table: high-unknown carnivores
+collapse (Canis aureus 95.2% unknown -> 0.03 retained; Ursus 87% -> 0.17;
+wolf 47% -> 0.49, near one-to-one loss of silent records), the
+machine-observation case collapses independently (Caretta 78% MO -> 0.06),
+yet Aquila fasciata with 41% of records at r>=10 km (median 50 km,
+nest-protection obscuring) retains 0.72 — excluding any single hard radius
+filter. Conclusion recorded for the paper: cube ingestion depletes training
+data along the same metadata axes the audit stratum measures (missing
+precision, non-human modalities, large radii), hardest for
+conservation-critical carnivores. Exact SQL attribution remains bounded by
+G2 (query declined). Evidence: data/reference/basis_by_species_2026-08-11.csv.
+No further D2 forensics inside this paper (priority discipline).
+
+**ERA5 acquisition: full snapshot, lazy slicing rejected on measurement.**
+One month of one pressure variable over HTTP took 3,030 s (chunk layout
+42x1x121x240 forces near-full reads). Decision: snapshot the whole
+Copernicus folder (~31 GB) via huggingface_hub with resume; files are
+global 721x1440, Europe is cropped by the batch builder. RedList remains
+absent on HF; resolved at scan_biocube time as already logged.
