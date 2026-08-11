@@ -482,3 +482,42 @@ Cross-check of cube occurrence sums against our raw-GBIF pre-flight counts
 per species is in the run output committed with this entry; ratios below 1
 are expected (cube-side filters and aggregation), and the four ultra-sparse
 channels (D1) remain ultra-sparse here.
+
+---
+
+## 2026-08-11 — A1 closed; archive truncation incident; D2 is multi-mechanism
+
+**A1 (post-window evaluation): CLOSED — impossible from public artifacts.**
+Species ground truth runs to 2025-05, but the released inputs stop earlier:
+all seven ERA5 files end 2020-12 (n=252 months each), and monthly NDVI ends
+2020-06 — exactly at the training-window end, which is presumably WHY the
+window ends there. No post-2020-06 batch can be assembled without imputing
+an input channel, and imputed inputs would contaminate the attribution of
+any coverage result to the model. The registered final-13 holdout (G3 item
+1) stands; its months sit inside every input's coverage. Recorded for
+completeness: ERA5 carries six extra months (2020-07..12) and the yearly
+indicator CSVs run to 2021.
+
+**Archive truncation incident.** The GBIF archive read successfully in full
+by script 03 (12.5M records) was found next day at 63,963,136 of
+1,139,734,500 bytes, ZIP magic intact, central directory gone. Cause
+undetermined; leading hypothesis is macOS "Optimize Mac Storage" eviction
+(repository lives under ~/Desktop, which is iCloud-managed). Healed by
+ranged resume against the GBIF endpoint to the exact API-reported size;
+is_zipfile passes. Guard going forward: compare on-disk size to the GBIF
+API size before any read; if it recurs, relocate data stores outside
+~/Desktop.
+
+**D2 — cube shortfall is multi-mechanism.** Evidence table
+`data/reference/basis_by_species_2026-08-11.csv` (commit ffd8976).
+Spearman(occ_ratio, %HUMAN_OBSERVATION) = +0.615 across the 28 species.
+Three named mechanisms, none sufficient alone: (i) machine-observation
+exclusion — Caretta caretta at ratio 0.06 with 78% MACHINE_OBSERVATION is
+the clean case; (ii) uncertainty-based exclusion hitting sensitive-species
+coordinate generalisation — the collapse cluster (Canis aureus 0.03, Gulo
+0.12, Ursus 0.17, Monachus 0.34, both lynxes, wolf) is precisely the set
+whose coordinates portals obscure for protection, which would make the
+cube's quality filter THE SAME VARIABLE as the audit stratum; (iii) cube
+snapshot age (post-snapshot publication growth). Next falsification step:
+per-species coordinate-uncertainty profile vs occ_ratio, from our own
+download.
