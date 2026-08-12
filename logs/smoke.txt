@@ -1,1 +1,9 @@
-python: can't open file '/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py': [Errno 2] No such file or directory
+Traceback (most recent call last):
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py", line 14, in <module>
+    from bfm_model.bfm.model import BFM  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/model.py", line 28, in <module>
+    from bfm_model.bfm.batch_utils import build_new_batch_with_prediction
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/batch_utils.py", line 9, in <module>
+    import typer
+ModuleNotFoundError: No module named 'typer'
