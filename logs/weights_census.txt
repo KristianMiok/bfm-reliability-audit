@@ -1,0 +1,97 @@
+307 tensors, 195.3M params
+
+top-level groups:
+  backbone.decoder_layers                       52
+  backbone.encoder_layers                       51
+  backbone.final_proj                           2
+  backbone.time_mlp                             4
+  decoder.absolute_time_embed                   2
+  decoder.agriculture_token_proj                2
+  decoder.atmos_token_proj                      2
+  decoder.climate_token_proj                    2
+  decoder.edaphic_token_proj                    2
+  decoder.forest_token_proj                     2
+  decoder.land_token_proj                       2
+  decoder.lead_time_embed                       2
+  decoder.misc_token_proj                       2
+  decoder.perceiver_io                          64
+  decoder.pos_embed                             2
+  decoder.redlist_token_proj                    2
+  decoder.species_token_proj                    2
+  decoder.surface_token_proj                    2
+  decoder.vegetation_token_proj                 2
+  encoder.absolute_time_embed                   2
+  encoder.agri_latents                          1
+  encoder.agriculture_token_embeds              2
+  encoder.atmos_latents                         1
+  encoder.atmos_levels_embed                    1
+  encoder.atmos_token_embeds                    2
+  encoder.climate_latents                       1
+  encoder.climate_token_embeds                  2
+  encoder.edaphic_latents                       1
+  encoder.edaphic_token_embeds                  2
+  encoder.forest_latents                        1
+  encoder.forest_token_embeds                   2
+  encoder.land_latents                          1
+  encoder.land_token_embeds                     2
+  encoder.lead_time_embed                       2
+  encoder.misc_latents                          1
+  encoder.misc_token_embeds                     2
+  encoder.perceiver_io                          64
+  encoder.pos_embed                             2
+  encoder.pre_perceiver_norm                    2
+  encoder.redlist_latents                       1
+  encoder.redlist_token_embeds                  2
+  encoder.species_latents                       1
+  encoder.species_token_embeds                  2
+  encoder.surface_latents                       1
+  encoder.surface_token_embeds                  2
+  encoder.vegetation_latents                    1
+  encoder.vegetation_token_embeds               2
+
+encoder layers: [0, 1]  depths per layer: [2, 2]
+decoder layers: [0, 1]  depths per layer: [2, 2]
+
+backbone.encoder_layers.0.blocks.0.attention.qkv.weight: (768, 256)  -> embed_dim = 256
+decoder.absolute_time_embed.weight                           (256, 256)
+decoder.agriculture_token_proj.weight                        (44800, 256)
+decoder.atmos_token_proj.weight                              (44800, 256)
+decoder.climate_token_proj.weight                            (44800, 256)
+decoder.edaphic_token_proj.weight                            (44800, 256)
+decoder.forest_token_proj.weight                             (44800, 256)
+decoder.land_token_proj.weight                               (44800, 256)
+decoder.lead_time_embed.weight                               (256, 256)
+decoder.misc_token_proj.weight                               (44800, 256)
+decoder.perceiver_io.latents                                 (124, 256)
+decoder.pos_embed.weight                                     (256, 131)
+decoder.redlist_token_proj.weight                            (44800, 256)
+decoder.species_token_proj.weight                            (44800, 256)
+decoder.surface_token_proj.weight                            (44800, 256)
+decoder.vegetation_token_proj.weight                         (44800, 256)
+encoder.absolute_time_embed.weight                           (256, 256)
+encoder.agri_latents                                         (2800, 256)
+encoder.agriculture_token_embeds.weight                      (256, 96)
+encoder.atmos_latents                                        (36400, 256)
+encoder.atmos_levels_embed.weight                            (13, 256)
+encoder.atmos_token_embeds.weight                            (256, 160)
+encoder.climate_latents                                      (2800, 256)
+encoder.climate_token_embeds.weight                          (256, 352)
+encoder.edaphic_latents                                      (2800, 256)
+encoder.edaphic_token_embeds.weight                          (256, 128)
+encoder.forest_latents                                       (2800, 256)
+encoder.forest_token_embeds.weight                           (256, 32)
+encoder.land_latents                                         (2800, 256)
+encoder.land_token_embeds.weight                             (256, 32)
+encoder.lead_time_embed.weight                               (256, 256)
+encoder.misc_latents                                         (2800, 256)
+encoder.misc_token_embeds.weight                             (256, 64)
+encoder.perceiver_io.latents                                 (64400, 256)
+encoder.pos_embed.weight                                     (256, 258)
+encoder.redlist_latents                                      (2800, 256)
+encoder.redlist_token_embeds.weight                          (256, 32)
+encoder.species_latents                                      (2800, 256)
+encoder.species_token_embeds.weight                          (256, 896)
+encoder.surface_latents                                      (2800, 256)
+encoder.surface_token_embeds.weight                          (256, 224)
+encoder.vegetation_latents                                   (2800, 256)
+encoder.vegetation_token_embeds.weight                       (256, 32)

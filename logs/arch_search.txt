@@ -1,0 +1,3 @@
+checkpoint: 307 tensors
+trying 72 candidates (embed, heads, head_dim, depth, latents, swin_heads)
+NO exact match. Closest: embed=256 heads=16 head_dim=64 depth=2 latents=8 swin_heads=8  -> missing=26 unexpected=14 shape_mismatch=0

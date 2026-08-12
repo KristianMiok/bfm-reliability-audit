@@ -1,59 +1,32 @@
-weights: 307 tensors, 195.3M params
-sample keys: ['backbone.decoder_layers.0.blocks.0.attention.proj.bias', 'backbone.decoder_layers.0.blocks.0.attention.proj.weight', 'backbone.decoder_layers.0.blocks.0.attention.qkv.bias', 'backbone.decoder_layers.0.blocks.0.attention.qkv.weight']
-Num of patches in Encoder: 2800
-Total latens 64400
-BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-Total query tokens for Decoder:  124
-BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-[large] missing=0 unexpected=254 shape_mismatch=296
-Num of patches in Encoder: 2800
-Total latens 64400
-BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-Total query tokens for Decoder:  124
-BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
-[medium] missing=0 unexpected=196 shape_mismatch=296
-NO exact architecture match — refusing to load. STOP.
+diff: unexpected=0 shape_mismatch=0 missing=14 (dead-branch 3, aliases 11)
+alias check: list_ptrs subset of named_ptrs = True; species_latents equals checkpoint = True
+G3 pre-check: BatchNorm=0 DropPath=6 rates=[0.033, 0.067, 0.1]
+We scale the dataset True with normalize
+dataset samples (window pairs): 18
+Traceback (most recent call last):
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py", line 116, in <module>
+    t0 = time.time(); out = model(x, lt); dt = time.time() - t0
+                            ~~~~~^^^^^^^
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/model.py", line 346, in forward
+    backbone_output = self.backbone(encoded, lead_time=lead_time, rollout_step=rollout_step, patch_shape=patch_shape)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/swin_transformer/core/swim_core_v2.py", line 221, in forward
+    c = self.time_mlp(lead_time_expansion(lead_times, self.embed_dim).to(dtype=x.dtype))
+                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/swin_transformer/helpers/fourier_expansion.py", line 70, in forward
+    x = x.to(torch.float64)
+TypeError: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
