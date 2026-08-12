@@ -1,10 +1,11 @@
+MPS fp64 shim installed on: ['__annotate__']
 diff: unexpected=0 shape_mismatch=0 missing=14 (dead-branch 3, aliases 11)
 alias check: list_ptrs subset of named_ptrs = True; species_latents equals checkpoint = True
 G3 pre-check: BatchNorm=0 DropPath=6 rates=[0.033, 0.067, 0.1]
 We scale the dataset True with normalize
 dataset samples (window pairs): 18
 Traceback (most recent call last):
-  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py", line 116, in <module>
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py", line 144, in <module>
     t0 = time.time(); out = model(x, lt); dt = time.time() - t0
                             ~~~~~^^^^^^^
   File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl

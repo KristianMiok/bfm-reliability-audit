@@ -20,6 +20,34 @@ from bfm_model.bfm.dataloader_monthly import (  # noqa: E402
     LargeClimateDataset, custom_collate, batch_to_device,
 )
 
+# --- MPS float64 shim -------------------------------------------------------
+# fourier_expansion casts to float64 internally; MPS has no float64. Every
+# call site immediately casts the result back to x.dtype (float32), so
+# computing the fp64 part on CPU and returning fp32 is numerically identical
+# to the CUDA path. We wrap every function defined in that helper module and
+# rebind by identity across already-imported modules.
+import types  # noqa: E402
+import bfm_model.swin_transformer.helpers.fourier_expansion as _fe  # noqa: E402
+
+def _cpu_fp32(fn):
+    def wrapped(x, *a, **k):
+        if torch.is_tensor(x) and x.device.type != "cpu":
+            return fn(x.detach().cpu(), *a, **k).to(torch.float32).to(x.device)
+        return fn(x, *a, **k)
+    wrapped.__wrapped_orig__ = fn
+    return wrapped
+
+_origs = {n: f for n, f in vars(_fe).items()
+          if isinstance(f, types.FunctionType) and f.__module__ == _fe.__name__}
+for _n, _f in _origs.items():
+    _w = _cpu_fp32(_f)
+    setattr(_fe, _n, _w)
+    for _m in list(sys.modules.values()):
+        if _m is not None and getattr(_m, _n, None) is _f:
+            setattr(_m, _n, _w)
+print(f"MPS fp64 shim installed on: {sorted(_origs)}")
+# ---------------------------------------------------------------------------
+
 cfg = OmegaConf.load(BFM_REPO / "bfm_model/bfm/configs/train_config.yaml")
 cfg.data.scaling.stats_path = str(
     BFM_REPO / "batch_statistics/monthly_batches_stats_splitted_channels.json")
@@ -129,6 +157,7 @@ Path("data/interim/smoke_report.json").write_text(json.dumps(dict(
     arch=ARCH | {"swin_depths": list(ARCH["swin_depths"])},
     dead_branch_keys=len(DEAD), alias_keys=len(ALIAS),
     batchnorm=len(bn), droppath=len(dp), droppath_rates=rates,
-    device=device, forward_seconds=round(dt, 1),
+    device=device, mps_fp64_shim=True,
+    forward_seconds=round(dt, 1),
     species_channels=len(sp), dataset_samples=len(ds))))
 print("SMOKE PASS — arch + report written")
