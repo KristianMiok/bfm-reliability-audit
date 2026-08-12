@@ -663,3 +663,17 @@ segment runs on CPU and the fp32 result moves back — numerically identical
 to the CUDA path. Forward pass on mps: 13.5 s;
 28 species channels, finite; 18
 window pairs. E2.2 complete; K-pilot next, outside the final-13 windows.
+
+---
+
+## 2026-08-12 — K-pilot complete; K frozen at 64
+
+Pilot on window 0 (2018-11/12, outside the registered
+final-13). Stochastic depth enabled surgically on 6
+DropPath modules, everything else in eval; sample-to-sample max abs
+difference 0.0001 confirms the mechanism is
+active. Sigma-rank stability vs K=64 over land cells:
+K=8: pooled 0.8582, species-min 0.7864; K=16: pooled 0.9452, species-min 0.9058; K=32: pooled 0.989, species-min 0.9817; K=64: pooled 1.0, species-min 1.0.
+Registered rule (smallest K with pooled Spearman >= 0.99) selects
+**K = 64**, now frozen for the main run. Steady-state forward:
+16.91 s.
