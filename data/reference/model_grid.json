@@ -6,11 +6,10 @@
   "lon_min": -25.125,
   "verified": true,
   "provenance": {
-    "method": "release-code-derivation",
-    "writer": "BioDT/bfm-data scan_biocube.py + build_batches_monthly.py",
-    "reader": "BioDT/bfm-model dataloader_monthly.py, patch_size=4",
-    "confirmed_against_batch": false,
-    "gate": "no model-facing inference until --batch-file confirms",
-    "date": "2026-08-10"
+    "method": "batch-metadata",
+    "batch_file": "data/external/batches/batch_2018-11-01_to_2018-12-01.pt",
+    "confirmed_against_batch": true,
+    "matches_release_code_derivation": true,
+    "date": "2026-08-12"
   }
 }

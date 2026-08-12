@@ -605,3 +605,22 @@ train_config variable contract and stops loudly on any missing variable.
 
 **G1 gate NOT discharged in this run** — provenance lacks a confirmed,
 matching batch. Inference remains blocked.
+
+---
+
+## 2026-08-12 — R2 extended: off-grid ERA5-Land file also skipped
+
+After skipping the static auxiliaries, the released builder crashed on a
+latitude KeyError: a land-vegetation file (data_stream-moda.nc) sits on the
+0.1-degree ERA5-Land grid, which does not contain the 0.25-degree GRID_LAT
+values. Its variables, like the static auxiliaries, appear nowhere in the
+model's train_config. Guard R2 extended to skip (ValueError, KeyError) with
+a logged warning; the contract-diff probe remains the loud safety net for
+anything the model actually requires.
+
+**G1 gate DISCHARGED on a real rebuilt batch.** 01 --batch-file confirms
+the release-code derivation exactly (ascending vectors, raw 161x281, crop
+160x280); provenance: method=batch-metadata, confirmed_against_batch=true,
+matches_release_code_derivation=true. Model-facing inference is permitted
+under G3. R1 outcome: RLI reconstructed for 12,857/12,922 cells; Albania
+(48) and Kosovo (17) zero-filled — input-side only.
