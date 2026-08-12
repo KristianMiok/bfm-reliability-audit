@@ -1,9 +1,59 @@
-Traceback (most recent call last):
-  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py", line 14, in <module>
-    from bfm_model.bfm.model import BFM  # noqa: E402
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/model.py", line 37, in <module>
-    from bfm_model.mvit.mvit_model import MViT
-  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/mvit/mvit_model.py", line 9, in <module>
-    from fvcore.common.registry import Registry
-ModuleNotFoundError: No module named 'fvcore'
+weights: 307 tensors, 195.3M params
+sample keys: ['backbone.decoder_layers.0.blocks.0.attention.proj.bias', 'backbone.decoder_layers.0.blocks.0.attention.proj.weight', 'backbone.decoder_layers.0.blocks.0.attention.qkv.bias', 'backbone.decoder_layers.0.blocks.0.attention.qkv.weight']
+Num of patches in Encoder: 2800
+Total latens 64400
+BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+Total query tokens for Decoder:  124
+BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+[large] missing=0 unexpected=254 shape_mismatch=296
+Num of patches in Encoder: 2800
+Total latens 64400
+BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+Total query tokens for Decoder:  124
+BuiltinAttention q_dim 512 | context dim 641 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+BuiltinAttention q_dim 512 | context dim 512 | num q heads 16 | head dim 64 | kv_heads 8
+[medium] missing=0 unexpected=196 shape_mismatch=296
+NO exact architecture match — refusing to load. STOP.

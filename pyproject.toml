@@ -12,6 +12,7 @@ dependencies = [
     "typer>=0.27.1",
     "cartopy>=0.25.0",
     "plotly>=6.9.0",
+    "fvcore>=0.1.5.post20221221",
 ]
 
 [project.optional-dependencies]
