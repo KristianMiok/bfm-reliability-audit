@@ -574,3 +574,16 @@ the run output. This channel is model INPUT only — never an evaluation
 target — so the approximation cannot touch the audit's endpoints; it is a
 registered deviation from "public BioCube artifacts only", reconstructed
 from the same public upstream.
+
+---
+
+## 2026-08-12 — correction of commit 7e4d5e2; G1 gate status
+
+**Correction.** The message of commit 7e4d5e2 claimed "G1 gate DISCHARGED";
+it was not. The pipeline aborted on a missing dask dependency before any
+batch existed, so 01 --batch-file never ran. The claim was written before
+the outcome — the exact failure mode this log exists to prevent. History is
+not rewritten; this entry corrects the record.
+
+**G1 gate NOT discharged in this run** — provenance does not show a
+confirmed, matching batch. Inference remains blocked.
