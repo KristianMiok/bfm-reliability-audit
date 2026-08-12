@@ -548,3 +548,29 @@ One month of one pressure variable over HTTP took 3,030 s (chunk layout
 Copernicus folder (~31 GB) via huggingface_hub with resume; files are
 global 721x1440, Europe is cropped by the batch builder. RedList remains
 absent on HF; resolved at scan_biocube time as already logged.
+
+---
+
+## 2026-08-12 — snapshot complete; truncation suspect cleared; R1 registered
+
+**ERA5 snapshot complete**: 29 GB on disk, 12/12 files, 10 h 04 min wall
+time, resume-capable throughout. All batch inputs are now local.
+
+**Truncation incident update**: iCloud is RULED OUT as the cause of the
+GBIF archive truncation — Desktop & Documents sync is disabled on this
+machine (verified in system settings). Cause remains undetermined; the
+size-check guard before every read stays regardless.
+
+**R1 — RLI input channel reconstructed from the public upstream source.**
+The model config requires an `RLI` input variable; the RedList CSV is
+absent from BioCube on HF. Decision, registered before execution:
+synthesize `RedList/Europe_red_list_index.csv` in the pipeline's exact
+format from the UN SDG indicator 15.5.1 national Red List Index series
+(same IUCN source their ingestion documents), joined to the cell->Country
+mapping already present in their own `Europe_land_data.csv`. Yearly columns
+RLI_2000..RLI_2021. Acceptance check: in the assembled batch, RLI is finite
+over land and within [0,1]; countries that fail name-matching are listed in
+the run output. This channel is model INPUT only — never an evaluation
+target — so the approximation cannot touch the audit's endpoints; it is a
+registered deviation from "public BioCube artifacts only", reconstructed
+from the same public upstream.

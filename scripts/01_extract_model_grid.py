@@ -114,8 +114,17 @@ def main() -> int:
     ref_lat, ref_lon = release_code_vectors()
 
     if args.batch_file:
-        with open(args.batch_file, "rb") as fh:
-            obj = pickle.load(fh)
+        if args.batch_file.suffix == ".pt":
+            import torch
+            try:
+                obj = torch.load(args.batch_file, map_location="cpu",
+                                 weights_only=True)
+            except Exception:
+                obj = torch.load(args.batch_file, map_location="cpu",
+                                 weights_only=False)
+        else:
+            with open(args.batch_file, "rb") as fh:
+                obj = pickle.load(fh)
         meta = obj.get("batch_metadata", obj)
         lats = np.asarray(meta["latitudes"], dtype=float).ravel()
         lons = np.asarray(meta["longitudes"], dtype=float).ravel()
