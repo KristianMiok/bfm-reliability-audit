@@ -1,0 +1,96 @@
+We scale the dataset True with normalize
+device=mps  windows=[0, 4, 9, 14, 17]  land cells=15,360
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+
+window 0: output std(land)=8.7413e-04  per-species spatial CV=70.594
+  zero:species_variables          1.6545e-09     0.00%
+  zero:atmospheric_variables      5.7658e-05     6.60%
+  zero:climate_variables          3.0439e-06     0.35%
+  zero:surface_variables          2.0967e-07     0.02%
+  zero:edaphic_variables          2.3820e-07     0.03%
+  zero:vegetation_variables       1.3632e-07     0.02%
+  zero:land_variables             2.3874e-08     0.00%
+  zero:agriculture_variables      4.9917e-08     0.01%
+  zero:forest_variables           1.3463e-08     0.00%
+  zero:redlist_variables          0.0000e+00     0.00%
+  zero:misc_variables             1.1676e-07     0.01%
+  permute:species                 1.7938e-09     0.00%
+  x100:species                    4.2468e-09     0.00%
+
+window 4: output std(land)=6.8512e-04  per-species spatial CV=16.008
+  zero:species_variables          1.1412e-09     0.00%
+  zero:atmospheric_variables      2.7018e-05     3.94%
+  zero:climate_variables          6.0696e-05     8.86%
+  zero:surface_variables          2.4616e-07     0.04%
+  zero:edaphic_variables          2.3733e-07     0.03%
+  zero:vegetation_variables       7.1316e-08     0.01%
+  zero:land_variables             1.4721e-08     0.00%
+  zero:agriculture_variables      4.3347e-08     0.01%
+  zero:forest_variables           2.0133e-08     0.00%
+  zero:redlist_variables          0.0000e+00     0.00%
+  zero:misc_variables             1.6153e-07     0.02%
+  permute:species                 1.1755e-09     0.00%
+  x100:species                    4.1622e-09     0.00%
+
+window 9: output std(land)=9.9054e-04  per-species spatial CV=22.433
+  zero:species_variables          1.5325e-09     0.00%
+  zero:atmospheric_variables      5.7903e-05     5.85%
+  zero:climate_variables          5.3070e-05     5.36%
+  zero:surface_variables          3.6331e-07     0.04%
+  zero:edaphic_variables          3.7386e-07     0.04%
+  zero:vegetation_variables       9.2934e-08     0.01%
+  zero:land_variables             2.4948e-08     0.00%
+  zero:agriculture_variables      1.8136e-07     0.02%
+  zero:forest_variables           2.3345e-08     0.00%
+  zero:redlist_variables          0.0000e+00     0.00%
+  zero:misc_variables             1.4341e-07     0.01%
+  permute:species                 1.4964e-09     0.00%
+  x100:species                    6.9745e-09     0.00%
+
+window 14: output std(land)=2.2572e-04  per-species spatial CV=12.700
+  zero:species_variables          1.0646e-09     0.00%
+  zero:atmospheric_variables      3.1599e-05    14.00%
+  zero:climate_variables          1.1704e-05     5.19%
+  zero:surface_variables          1.0278e-07     0.05%
+  zero:edaphic_variables          7.0287e-08     0.03%
+  zero:vegetation_variables       1.4088e-08     0.01%
+  zero:land_variables             1.6352e-08     0.01%
+  zero:agriculture_variables      1.8283e-08     0.01%
+  zero:forest_variables           5.2223e-08     0.02%
+  zero:redlist_variables          0.0000e+00     0.00%
+  zero:misc_variables             9.1549e-08     0.04%
+  permute:species                 1.0258e-09     0.00%
+  x100:species                    1.8908e-09     0.00%
+
+window 17: output std(land)=1.0948e-03  per-species spatial CV=17.719
+  zero:species_variables          1.2955e-09     0.00%
+  zero:atmospheric_variables      6.4306e-05     5.87%
+  zero:climate_variables          8.8665e-05     8.10%
+  zero:surface_variables          3.1158e-07     0.03%
+  zero:edaphic_variables          3.3846e-07     0.03%
+  zero:vegetation_variables       9.9327e-08     0.01%
+  zero:land_variables             2.2536e-08     0.00%
+  zero:agriculture_variables      4.3319e-08     0.00%
+  zero:forest_variables           2.6980e-08     0.00%
+  zero:redlist_variables          0.0000e+00     0.00%
+  zero:misc_variables             1.8523e-07     0.02%
+  permute:species                 1.3553e-09     0.00%
+  x100:species                    7.8306e-09     0.00%
+
+written /Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/data/interim/ablation.json
+
+=== summary across windows (relative mean|d|) ===
+permute:species                median=  0.0002%  max=  0.0005%
+x100:species                   median=  0.0007%  max=  0.0008%
+zero:agriculture_variables     median=  0.0063%  max=  0.0183%
+zero:atmospheric_variables     median=  5.8738%  max= 13.9995%
+zero:climate_variables         median=  5.3577%  max=  8.8592%
+zero:edaphic_variables         median=  0.0311%  max=  0.0377%
+zero:forest_variables          median=  0.0025%  max=  0.0231%
+zero:land_variables            median=  0.0025%  max=  0.0072%
+zero:misc_variables            median=  0.0169%  max=  0.0406%
+zero:redlist_variables         median=  0.0000%  max=  0.0000%
+zero:species_variables         median=  0.0002%  max=  0.0005%
+zero:surface_variables         median=  0.0359%  max=  0.0455%
+zero:vegetation_variables      median=  0.0094%  max=  0.0156%
