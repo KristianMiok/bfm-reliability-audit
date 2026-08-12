@@ -751,3 +751,33 @@ The audit's contribution stands rearranged, not diminished: E1 stratum,
 D1, D2, five documented code/data drifts, two dead input pathways, and a
 degenerate uncertainty mechanism — all caught by the pre-registered
 protocol before a single misleading coverage number existed.
+
+---
+
+## 2026-08-12 — ablation replicated across five windows: the finding is robust
+
+Windows 0, 4, 9, 14, 17 (spanning seasons; 5-17 are the registered
+final-13). Species-output response to zeroing each input group, land mean
+|d| relative to the model's own output std, median across windows:
+
+  atmospheric 5.87% | climate
+  5.36% | surface
+  0.036% | edaphic
+  0.031% | vegetation
+  0.009% | misc
+  0.017% | agriculture
+  0.006% | forest
+  0.002% | land
+  0.003% | **species
+  0.0002%** | **redlist exactly 0.0**
+
+Adversarial species perturbations, not just zeroing: permuting the 28
+species channels moves the output 0.0002%;
+amplifying species inputs x100 moves it 0.0007%.
+An absurd input is not noticed — this forecloses the objection that zeros
+are a legitimate input state for sparse species. Ratio of atmospheric to
+species response: ~35,262x.
+Output is spatially structured (per-species spatial CV 12.7-70.6), so the
+insensitivity is not a constant-map artefact: the released checkpoint
+produces structured maps driven, to four orders of magnitude, by
+atmosphere alone. Table: data/reference/table1_ablation.csv.

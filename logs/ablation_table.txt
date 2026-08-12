@@ -1,0 +1,19 @@
+                              median_abs  median_rel_pct  max_rel_pct
+variant                                                              
+zero:atmospheric_variables  5.765784e-05          5.8738      13.9995
+zero:climate_variables      5.307003e-05          5.3577       8.8592
+zero:surface_variables      2.461556e-07          0.0359       0.0455
+zero:edaphic_variables      2.382007e-07          0.0311       0.0377
+zero:misc_variables         1.434147e-07          0.0169       0.0406
+zero:vegetation_variables   9.293423e-08          0.0094       0.0156
+zero:agriculture_variables  4.334706e-08          0.0063       0.0183
+zero:land_variables         2.253620e-08          0.0025       0.0072
+zero:forest_variables       2.334478e-08          0.0025       0.0231
+x100:species                4.246767e-09          0.0007       0.0008
+permute:species             1.355272e-09          0.0002       0.0005
+zero:species_variables      1.295517e-09          0.0002       0.0005
+zero:redlist_variables      0.000000e+00          0.0000       0.0000
+
+atmospheric / species response ratio (median): 35,262x
+windows tested: [np.int64(0), np.int64(4), np.int64(9), np.int64(14), np.int64(17)]
+output spatial CV range: 12.7 - 70.6

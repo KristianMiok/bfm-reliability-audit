@@ -1,0 +1,14 @@
+variant,median_abs,median_rel_pct,max_rel_pct
+zero:atmospheric_variables,5.7657842262415215e-05,5.8738,13.9995
+zero:climate_variables,5.307003448251635e-05,5.3577,8.8592
+zero:surface_variables,2.461555652644165e-07,0.0359,0.0455
+zero:edaphic_variables,2.382006698553596e-07,0.0311,0.0377
+zero:misc_variables,1.4341465259803954e-07,0.0169,0.0406
+zero:vegetation_variables,9.293422920109151e-08,0.0094,0.0156
+zero:agriculture_variables,4.334705749897694e-08,0.0063,0.0183
+zero:land_variables,2.2536202237688485e-08,0.0025,0.0072
+zero:forest_variables,2.3344775001987728e-08,0.0025,0.0231
+x100:species,4.246767382198868e-09,0.0007,0.0008
+permute:species,1.3552717836873285e-09,0.0002,0.0005
+zero:species_variables,1.2955173600559533e-09,0.0002,0.0005
+zero:redlist_variables,0.0,0.0,0.0
