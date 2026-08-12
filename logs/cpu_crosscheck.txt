@@ -1,0 +1,2 @@
+We scale the dataset True with normalize
+CPU: output std=8.7413e-04  species-zeroed mean|d|=2.0129e-09 max|d|=1.3970e-07  relative=0.0002%

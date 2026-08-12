@@ -708,3 +708,46 @@ Sigma-rank stability vs K=64 over land:
 K=8: pooled 0.8582; K=16: pooled 0.9452; K=32: pooled 0.989; K=64: pooled 1.0.
 Registered rule selects **K = 64**; steady-state forward
 17.0 s.
+
+---
+
+## 2026-08-12 — STOP RULE INVOKED (G3 item 10); main run cancelled; the finding
+
+**The registered mechanism is degenerate and the audited pathway is dead.**
+With valid, populated batches (post-R4), on window 0:
+
+- MC-DropPath sigma over land: median 2.583e-07, p90 7.069e-07 — 8,860x
+  below the median nonzero target delta and ~3,400x below the model's own
+  species-output spatial std (8.741e-04). Identical to four decimals with
+  empty and with populated species inputs.
+- Input-group ablation (deterministic, one group zeroed at a time; species
+  OUTPUT response, land mean |d|): atmospheric 5.766e-05 (6.60% of output
+  std), climate 3.044e-06 (0.35%), everything else <= 0.03%, species
+  1.654e-09 (0.00%, rank 10/11), redlist exactly 0.0 (bitwise) — a second
+  dead input pathway. Atmospheric-to-species response ratio ~34,900x.
+- CPU replication (no MPS): species-zeroed mean |d| = 2.013e-09,
+  max |d| = 1.397e-07, output std = 8.741e-04 — the
+  insensitivity is not a Metal artifact.
+- The model is not frozen: window-to-window output difference is 14.6% of
+  output std; it responds to atmosphere, essentially only.
+
+**Consequence, per the pre-registration:** G3 item 10 ("if sigma is
+degenerate ... MC-DropPath fails as a mechanism and THAT becomes the
+finding") is invoked. The 13-window coverage run is CANCELLED — intervals
+of width ~1e-6 would produce numbers without content. No post-hoc switch of
+UQ method within this paper (registered).
+
+**Scope discipline for the paper.** Proven about the RELEASED artifacts:
+(i) released code + released data silently produce empty species channels
+(drift #5, R4); (ii) the released checkpoint's species outputs are
+insensitive to species inputs at the numeric noise floor, replicated on
+CPU; (iii) the redlist pathway is bitwise inert; (iv) the only internal
+stochastic mechanism yields degenerate spread. The training-side story
+("the checkpoint behaves exactly as a model trained under the reproduced
+ingestion defect would") is stated as CONSISTENT-WITH, never as a claim
+about their internal pipeline, which we cannot observe.
+
+The audit's contribution stands rearranged, not diminished: E1 stratum,
+D1, D2, five documented code/data drifts, two dead input pathways, and a
+degenerate uncertainty mechanism — all caught by the pre-registered
+protocol before a single misleading coverage number existed.

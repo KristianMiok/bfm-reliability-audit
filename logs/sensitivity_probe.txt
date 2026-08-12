@@ -1,0 +1,18 @@
+We scale the dataset True with normalize
+=== 1) dataset-level species (scaled space) ===
+x cell-std across map: 1.2766e-03   y cell-std: 1.6361e-03
+x months differ: 4.1876e-01   y months differ: 4.3021e-01
+window0 vs window5 x differ: 1.0000e+00
+
+=== 2) sigma vs target scale (land, scaled space) ===
+sigma   median=2.583e-07  p90=7.069e-07
+|delta| median=0.000e+00  p90=0.000e+00  nonzero=0.9%
+ratio median|delta|/median sigma = 8,860x
+
+=== 3) input sensitivity (deterministic, DropPath in eval) ===
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+output std (land): 8.7413e-04
+real vs species-ZEROED: max|d|=6.8569e-08  mean|d|=1.6545e-09  relative=0.000%
+window0 vs window5  : max|d|=9.6536e-02  mean|d|=1.2781e-04  relative=14.621%
+MC sigma / output std = 2.955e-04

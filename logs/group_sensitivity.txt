@@ -1,0 +1,20 @@
+We scale the dataset True with normalize
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+species output std (land): 8.7413e-04
+
+zeroed group                mean|d| (land)      max|d|  relative
+species_variables               1.6545e-09  6.8569e-08    0.00%
+surface_variables               2.0967e-07  1.6019e-04    0.02%
+atmospheric_variables           5.7658e-05  4.3796e-02    6.60%
+climate_variables               3.0439e-06  3.1577e-03    0.35%
+edaphic_variables               2.3820e-07  1.6908e-04    0.03%
+vegetation_variables            1.3632e-07  1.4223e-04    0.02%
+land_variables                  2.3874e-08  1.8649e-05    0.00%
+agriculture_variables           4.9917e-08  5.2992e-05    0.01%
+forest_variables                1.3463e-08  1.5523e-05    0.00%
+redlist_variables               0.0000e+00  0.0000e+00    0.00%
+misc_variables                  1.1676e-07  6.8173e-05    0.01%
+
+species_variables sensitivity rank: 10/11
+climate/species response ratio: 1,840x
