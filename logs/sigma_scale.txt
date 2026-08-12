@@ -1,0 +1,31 @@
+sigma over land, pooled 28 species (normalized space):
+  median=2.582e-07  p90=7.068e-07  p99=2.889e-06  max=1.211e-04
+  per-species median sigma: min=2.246e-07  max=1.804e-06
+We scale the dataset True with normalize
+
+target |delta| over land (same space):
+  median=0.000e+00  p90=0.000e+00  nonzero share=0.00%
+naive-persistence |error|: median=0.000e+00  p90=0.000e+00
+Traceback (most recent call last):
+  File "<stdin>", line 41, in <module>
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py", line 4508, in quantile
+    return _quantile_unchecked(
+        a, q, axis, out, overwrite_input, method, keepdims, weights, weak_q)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py", line 4522, in _quantile_unchecked
+    return _ureduce(a,
+                    func=_quantile_ureduce_func,
+    ...<6 lines>...
+                    method=method,
+                    weak_q=weak_q)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py", line 3892, in _ureduce
+    r = func(a, **kwargs)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py", line 4681, in _quantile_ureduce_func
+    result = _quantile(arr,
+                       quantiles=q,
+    ...<3 lines>...
+                       weights=wgt,
+                       weak_q=weak_q)
+  File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/numpy/lib/_function_base_impl.py", line 4805, in _quantile
+    slices_having_nans = np.isnan(arr[-1, ...])
+                                  ~~~^^^^^^^^^
+IndexError: index -1 is out of bounds for axis 0 with size 0

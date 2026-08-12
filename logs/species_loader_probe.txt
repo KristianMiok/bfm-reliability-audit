@@ -1,0 +1,13 @@
+returned vars: 28
+master species (first 5): ['1340361', '1340503', '1536449', '1898286', '1920506']  types: str
+  '1340361' (str): shape=(2, 161, 281) sum=0 nonzero=0
+  '1340503' (str): shape=(2, 161, 281) sum=0 nonzero=0
+  '1536449' (str): shape=(2, 161, 281) sum=0 nonzero=0
+TOTAL over all species: 0
+
+Timestamp: raw dtype=datetime64[ns]  converted dtype=datetime64[ns]
+rows in 2018-11 raw: 7,564  converted: 7,564
+
+parquet Species dtype: int64  sample: [1340361 1340503 1536449]
+builder master list sample: ['1340361', '1340503', '1536449']
+overlap: 28/28

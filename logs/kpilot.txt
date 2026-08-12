@@ -3,24 +3,24 @@ We scale the dataset True with normalize
 land cells: 15,360 / 44,800
 /Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
   return torch._C._nn.pad(input, pad, mode, value)
-  sample 1/64  12.2s
-  sample 2/64  12.4s
-  sample 8/64  13.1s
-  sample 16/64  18.7s
-  sample 24/64  17.0s
-  sample 32/64  16.9s
-  sample 40/64  16.9s
-  sample 48/64  16.9s
-  sample 56/64  16.9s
+  sample 1/64  11.8s
+  sample 2/64  11.3s
+  sample 8/64  14.1s
+  sample 16/64  16.9s
+  sample 24/64  16.8s
+  sample 32/64  15.3s
+  sample 40/64  17.0s
+  sample 48/64  19.2s
+  sample 56/64  19.9s
   sample 64/64  16.8s
 stochasticity check: max|s0-s1| = 0.000091
 
 K-stability (Spearman of per-cell sigma vs K=64, land only):
-  K= 8: pooled rho=0.8582  per-species min=0.7864
+  K= 8: pooled rho=0.8582  per-species min=0.7863
   K=16: pooled rho=0.9452  per-species min=0.9058
   K=32: pooled rho=0.9890  per-species min=0.9817
   K=64: pooled rho=1.0000  per-species min=1.0000
 
 CHOSEN K = 64  (registered rule: smallest K with pooled rho >= 0.99)
-steady-state forward: 16.9s  ->  main run ~235 min for 13 windows
+steady-state forward: 17.0s  ->  main run ~236 min for 13 windows
 K-PILOT DONE — report written

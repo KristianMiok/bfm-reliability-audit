@@ -677,3 +677,34 @@ K=8: pooled 0.8582, species-min 0.7864; K=16: pooled 0.9452, species-min 0.9058;
 Registered rule (smallest K with pooled Spearman >= 0.99) selects
 **K = 64**, now frozen for the main run. Steady-state forward:
 16.91 s.
+
+---
+
+## 2026-08-12 — R4: species channels were silently empty (drift #5, the dangerous one)
+
+The K-pilot's sigma came out at 2.6e-07 and the target delta at exactly
+zero over every land cell — impossible for birds and butterflies. Raw-batch
+forensics: all 28 species grids were zero, while the parquet holds 7,564
+rows for 2018-11 alone. Coordinate mapping and timestamp handling were
+cleared by direct probes (7,560/7,564 rows placeable). Cause: in the
+released `_load_species`, `_MASTER_SPECIES` holds STRING keys while the
+parquet's `Species` column is int64, so `df[df["Species"] == sp]` never
+matched and every grid stayed zero — silently. This is the fifth code/data
+drift and the first that would have produced NUMBERS rather than a crash:
+a complete, healthy-looking batch with a dead target channel. It goes in
+the paper as a reproducibility finding, not just a log entry.
+
+R4: normalise the key on both sides before comparison (idempotent,
+assert-protected, scripts/90_patch_bfm_data.py family). All 19 batches
+rebuilt. A species-population gate (nonzero mass and month-to-month
+variation) is now a permanent pre-flight check. **The earlier K-pilot is
+VOID** — it sampled a model fed zero species input; K is re-selected on the
+rebuilt batches below.
+
+**K-pilot (re-run, valid).** Window 0, outside the
+final-13. Stochastic depth on 6 DropPath modules;
+sample-to-sample max abs difference 9.12e-05.
+Sigma-rank stability vs K=64 over land:
+K=8: pooled 0.8582; K=16: pooled 0.9452; K=32: pooled 0.989; K=64: pooled 1.0.
+Registered rule selects **K = 64**; steady-state forward
+17.0 s.

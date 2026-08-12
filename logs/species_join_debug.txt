@@ -1,0 +1,9 @@
+rows in 2018-11: 7,564
+parquet dtypes: lat=float64 lon=float64
+GRID dtype: float64
+
+AS RELEASED: matched lat 7,564/7,564  lon 7,560/7,564
+WITH ROUNDING: matched lat 7,564  lon 7,560   (rows inside model bbox: 7,560)
+
+example: parquet lat np.float64(53.75) (float64)  in map as-is: True   rounded: True
+rows placeable after fix: 7,560  sum(Distribution)=38,927

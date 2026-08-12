@@ -1,0 +1,6 @@
+batches: 19
+batch_2018-11-01_to_2018-12-01.pt: sum=72,249 nonzero=13,755 months_differ=True
+batch_2018-12-01_to_2019-01-01.pt: sum=83,525 nonzero=13,499 months_differ=True
+batch_2019-01-01_to_2019-02-01.pt: sum=107,231 nonzero=17,354 months_differ=True
+batch_2020-05-01_to_2020-06-01.pt: sum=323,270 nonzero=42,416 months_differ=True
+SPECIES GATE: PASS
