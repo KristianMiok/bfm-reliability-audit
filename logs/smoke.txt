@@ -8,6 +8,6 @@ Traceback (most recent call last):
     )
   File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/dataloader_monthly.py", line 21, in <module>
     from bfm_model.bfm.utils import DictObj
-  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/utils.py", line 9, in <module>
-    import cartopy.crs as ccrs
-ModuleNotFoundError: No module named 'cartopy'
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/utils.py", line 12, in <module>
+    import plotly.graph_objects as go
+ModuleNotFoundError: No module named 'plotly'
