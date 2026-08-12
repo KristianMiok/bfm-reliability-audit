@@ -2,12 +2,8 @@ Traceback (most recent call last):
   File "/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/scripts/05_smoke_test.py", line 14, in <module>
     from bfm_model.bfm.model import BFM  # noqa: E402
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/model.py", line 29, in <module>
-    from bfm_model.bfm.dataloader_monthly import (
-    ...<4 lines>...
-    )
-  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/dataloader_monthly.py", line 21, in <module>
-    from bfm_model.bfm.utils import DictObj
-  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/utils.py", line 12, in <module>
-    import plotly.graph_objects as go
-ModuleNotFoundError: No module named 'plotly'
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/bfm/model.py", line 37, in <module>
+    from bfm_model.mvit.mvit_model import MViT
+  File "/Users/kristianmiok/Desktop/Papers/bfm-model/bfm_model/mvit/mvit_model.py", line 9, in <module>
+    from fvcore.common.registry import Registry
+ModuleNotFoundError: No module named 'fvcore'
