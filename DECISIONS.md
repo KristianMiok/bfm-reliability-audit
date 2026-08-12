@@ -624,3 +624,19 @@ the release-code derivation exactly (ascending vectors, raw 161x281, crop
 matches_release_code_derivation=true. Model-facing inference is permitted
 under G3. R1 outcome: RLI reconstructed for 12,857/12,922 cells; Albania
 (48) and Kosovo (17) zero-filled — input-side only.
+
+---
+
+## 2026-08-12 — R3: Arable and Cropland reconstructed (third code/data drift)
+
+The released agriculture CSV contains only the `Agriculture` variable; the
+model's train_config requires `Agriculture`, `Arable`, `Cropland`, and the
+released loader silently skips absent ones (`if sub.empty: continue`) — the
+contract-diff probe caught it. Third instance of release code and release
+data having drifted, after R1 (RedList absent) and R2 (static/off-grid ERA5
+files). R3: reconstruct `Arable` (World Bank AG.LND.ARBL.ZS) and `Cropland`
+(AG.LND.CROP.ZS) — the same upstream indicators their own worldbank.py
+ingests — joined to the cell->Country mapping already in the released file,
+appended in the pipeline's own long format. Input channels only, never an
+evaluation endpoint; coverage and unmatched countries logged in
+logs/r3_agriculture.txt.

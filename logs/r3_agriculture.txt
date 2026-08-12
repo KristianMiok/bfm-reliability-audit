@@ -1,0 +1,7 @@
+base rows 10,890  countries 34  years 1961-2021
+  AG.LND.ARBL.ZS: 14,326 rows, 253 countries
+Arable: cells with data 98.4%  unmatched countries ['Czechia', 'Kosovo']
+  AG.LND.CROP.ZS: 13,698 rows, 248 countries
+Cropland: cells with data 95.5%  unmatched countries ['Czechia', 'Iceland', 'Kosovo']
+
+written data/external/biocube/Agriculture/Europe_combined_agriculture_data.csv: {'Agriculture': 10890, 'Arable': 10890, 'Cropland': 10890}

@@ -1,0 +1,5 @@
+Variable values in Europe_combined_agriculture_data.csv:
+Variable
+Agriculture    10890
+
+columns: ['Variable', 'Country', 'Latitude', 'Longitude', 'Agri_1961', 'Agri_1962', 'Agri_1963', 'Agri_1964'] ... ['Agri_2019', 'Agri_2020', 'Agri_2021']

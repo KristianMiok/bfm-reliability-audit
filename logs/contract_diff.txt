@@ -1,0 +1,16 @@
+batches: 19
+surface_variables          7 vars  
+edaphic_variables          4 vars  ['stl1', 'stl2', 'swvl1', 'swvl2']
+atmospheric_variables      5 vars  ['q', 't', 'u', 'v', 'z']
+climate_variables         11 vars  
+misc_variables             2 vars  ['avg_pevr', 'avg_slhtf']
+vegetation_variables       1 vars  ['NDVI']
+land_variables             1 vars  ['Land']
+agriculture_variables      3 vars  ['Agriculture', 'Arable', 'Cropland']
+forest_variables           1 vars  ['Forest']
+redlist_variables          1 vars  ['RLI']
+  Arable: nonzero 22.4%  max 59.71
+  Cropland: nonzero 21.7%  max 9.78
+
+--- CONTRACT DIFF ---
+PASS
