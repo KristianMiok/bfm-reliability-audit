@@ -587,3 +587,21 @@ not rewritten; this entry corrects the record.
 
 **G1 gate NOT discharged in this run** — provenance does not show a
 confirmed, matching batch. Inference remains blocked.
+
+---
+
+## 2026-08-12 — released builder and released data have drifted; guard R2
+
+The released build_batches_monthly crashes on the released static ERA5
+auxiliaries (cvh/cvl/tvh/tvl, single 1996/2013 timestamps): a two-month
+selection returns zero steps and assign_coords fails. None of those
+variables appear anywhere in the model's train_config, so the batches the
+model trained on cannot have been built from these files by this code path
+— code and data on the public release have drifted. Guard R2
+(scripts/90_patch_bfm_data.py, idempotent, assert-protected): skip any ERA5
+file that cannot yield a complete 2-month window, with a logged warning.
+Safety net: the batch anatomy probe now diffs every slot against the full
+train_config variable contract and stops loudly on any missing variable.
+
+**G1 gate NOT discharged in this run** — provenance lacks a confirmed,
+matching batch. Inference remains blocked.
