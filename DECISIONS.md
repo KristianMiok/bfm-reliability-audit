@@ -640,3 +640,26 @@ ingests — joined to the cell->Country mapping already in the released file,
 appended in the pipeline's own long format. Input channels only, never an
 evaluation endpoint; coverage and unmatched countries logged in
 logs/r3_agriculture.txt.
+
+---
+
+## 2026-08-12 — architecture pinned by state-dict forensics; the model runs
+
+The HF config's swin sizes do not match the released small checkpoint. The
+real architecture was recovered from the weights: embed_dim
+256, heads 16, head_dim 64,
+perceiver depth 3 (key-name diff exposed layers.2), latent
+tokens 8, swin depths [2, 2] x
+8 heads. Controlled strict=False load: zero unexpected
+keys, zero shape mismatches, exactly 14 tolerated missing keys —
+3 PatchMerging fallback weights that postdate the
+checkpoint (drift #4; branch provably dead at 40x70 patches) and
+11 ParameterList aliases proven to share storage with the
+loaded named latents. G3 item-3 pre-checks: BatchNorm = 0
+(required 0); DropPath = 6 modules, LINEARLY RAMPED rates
+[0.033, 0.067, 0.1] (max 0.1). Platform shim, not an approximation:
+FourierExpansion casts to fp64 internally and returns fp32; on MPS the fp64
+segment runs on CPU and the fp32 result moves back — numerically identical
+to the CUDA path. Forward pass on mps: 13.5 s;
+28 species channels, finite; 18
+window pairs. E2.2 complete; K-pilot next, outside the final-13 windows.

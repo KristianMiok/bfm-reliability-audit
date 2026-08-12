@@ -20,32 +20,23 @@ from bfm_model.bfm.dataloader_monthly import (  # noqa: E402
     LargeClimateDataset, custom_collate, batch_to_device,
 )
 
-# --- MPS float64 shim -------------------------------------------------------
-# fourier_expansion casts to float64 internally; MPS has no float64. Every
-# call site immediately casts the result back to x.dtype (float32), so
-# computing the fp64 part on CPU and returning fp32 is numerically identical
-# to the CUDA path. We wrap every function defined in that helper module and
-# rebind by identity across already-imported modules.
-import types  # noqa: E402
+# --- MPS float64 shim v2 ----------------------------------------------------
+# FourierExpansion.forward casts to fp64 internally and returns .float() at
+# the end; MPS has no fp64. Running the fp64 part on CPU and moving the fp32
+# result back is numerically identical to the CUDA path (IEEE double either
+# way). Class-level patch covers the module-level lead_time_expansion
+# instance and any other use.
 import bfm_model.swin_transformer.helpers.fourier_expansion as _fe  # noqa: E402
 
-def _cpu_fp32(fn):
-    def wrapped(x, *a, **k):
-        if torch.is_tensor(x) and x.device.type != "cpu":
-            return fn(x.detach().cpu(), *a, **k).to(torch.float32).to(x.device)
-        return fn(x, *a, **k)
-    wrapped.__wrapped_orig__ = fn
-    return wrapped
+_orig_fourier_forward = _fe.FourierExpansion.forward
 
-_origs = {n: f for n, f in vars(_fe).items()
-          if isinstance(f, types.FunctionType) and f.__module__ == _fe.__name__}
-for _n, _f in _origs.items():
-    _w = _cpu_fp32(_f)
-    setattr(_fe, _n, _w)
-    for _m in list(sys.modules.values()):
-        if _m is not None and getattr(_m, _n, None) is _f:
-            setattr(_m, _n, _w)
-print(f"MPS fp64 shim installed on: {sorted(_origs)}")
+def _mps_safe_fourier_forward(self, x, d):
+    if torch.is_tensor(x) and x.device.type == "mps":
+        return _orig_fourier_forward(self, x.detach().cpu(), d).to(x.device)
+    return _orig_fourier_forward(self, x, d)
+
+_fe.FourierExpansion.forward = _mps_safe_fourier_forward
+print("MPS fp64 shim v2: FourierExpansion.forward -> CPU fp64, fp32 back on device")
 # ---------------------------------------------------------------------------
 
 cfg = OmegaConf.load(BFM_REPO / "bfm_model/bfm/configs/train_config.yaml")
