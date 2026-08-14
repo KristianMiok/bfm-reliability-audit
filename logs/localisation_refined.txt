@@ -1,0 +1,11 @@
+We scale the dataset True with normalize
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+stage                             tokens  sp tok        ALL   SPECIES SLICE
+encoder.species_token_embeds        2800     757  18.2478%       35.1133%
+encoder.pre_perceiver_norm         64400     757   0.2819%       23.9902%
+encoder.perceiver_io               64400   64400   0.0157%        0.0157%
+backbone                           64400   64400   0.0144%        0.0144%
+
+SPECIES SLICE = change measured only on tokens that actually move,
+normalised by those tokens' own scale. Dilution cannot hide here.

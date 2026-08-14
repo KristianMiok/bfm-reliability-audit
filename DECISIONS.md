@@ -823,3 +823,42 @@ comparable or greater amplitude than the inputs that do drive it. A
 plausible mechanism — per-channel max scaling delivering sparse count
 channels at ~1/136 amplitude under an MAE loss — is stated as a hypothesis
 about design consequences, not as a claim about their training.
+
+---
+
+## 2026-08-13 — mechanism localised: the perceiver fusion, not the inputs
+
+**Part A — input scaling is NOT the cause.** Rebuilding species inputs under
+three conventions and measuring presence-vs-absence sensitivity within each:
+per-channel max (release) 0.0002%; per-channel std 0.0018%; z-score 0.0017%.
+The better conventions deliver species at an input std of 0.704 — four times
+the atmospheric amplitude (0.174) — and still produce a response ~3,000x
+below the atmospheric reference (5.87%). There is no preprocessing fix.
+
+**Part B — the signal dies in one specific place.** Forward hooks, measured
+on the species token slice (tokens that actually move, normalised by their
+own scale, so concatenation dilution cannot masquerade as suppression):
+
+  encoder.species_token_embeds   757/2800 tokens move   35.1%
+  encoder.pre_perceiver_norm     757/64400 tokens       24.0%
+  encoder.perceiver_io           (dispersed)             0.0157%
+  backbone                                               0.0144%
+
+The species signal is encoded correctly and survives normalisation intact.
+It collapses by a factor of ~1,500 at the perceiver cross-attention that
+compresses 64,400 input tokens into the latent representation. An earlier
+whole-tensor measurement appeared to place the collapse at the norm layer;
+that was concatenation dilution, and the slice-wise measurement corrects it.
+Note also that only 757 of 2,800 species patches carry any signal (27%),
+against full coverage for atmospheric channels — the sparse modality
+competes for attention against dense ones and loses.
+
+**Consequence for the paper's contribution.** The finding is not a bug
+report and the remedy is not a preprocessing patch. It is an architectural
+result: in a shared-latent multimodal encoder, a sparse modality can be
+encoded faithfully and then eliminated at fusion, leaving a model that
+produces structured, plausible-looking maps driven entirely by the dense
+modalities. Transferable design recommendations follow directly — reserved
+per-modality latent budgets, auxiliary reconstruction loss on the sparse
+branch, or modality dropout during training — each testable by the same
+protocol on the next model.
