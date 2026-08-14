@@ -1,0 +1,9 @@
+We scale the dataset True with normalize
+species 1898286: raw nonzero=1262  raw max=48.0
+  raw  zero-cells value -> scaled: [0.]
+  raw 48 -> scaled 0.06324
+  scaled: mean=5.829e-05 std=0.0008967 max=0.06324
+scaled std of species_variables       0.001277
+scaled std of atmospheric_variables   0.1736
+scaled std of surface_variables       0.2953
+scaled std of climate_variables       0.259

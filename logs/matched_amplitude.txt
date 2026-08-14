@@ -1,0 +1,9 @@
+We scale the dataset True with normalize
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+amplitude gap species vs atmospheric: 136.0x
+species x   136.0 (matched     ): mean|d|=5.8900e-09  relative=0.0007%
+species x  1359.9 (10x matched ): mean|d|=4.1946e-08  relative=0.0048%
+species x 13598.7 (100x matched): mean|d|=7.3080e-08  relative=0.0084%
+
+reference: zeroing atmospheric gives 5.87% (median across windows)

@@ -781,3 +781,45 @@ Output is spatially structured (per-species spatial CV 12.7-70.6), so the
 insensitivity is not a constant-map artefact: the released checkpoint
 produces structured maps driven, to four orders of magnitude, by
 atmosphere alone. Table: data/reference/table1_ablation.csv.
+
+---
+
+## 2026-08-13 — scaling ruled out; matched-amplitude ablation; one claim retracted
+
+**Retraction.** The 2026-08-12 stop-rule entry stated the checkpoint behaves
+"as a model trained under the ingestion defect would". The released training
+statistics contradict this: species channels in
+`monthly_batches_stats_splitted_channels.json` are populated and realistic
+(per-channel max from 2 to 5050; 0 of 28 channels empty; means 3.4e-06 to
+0.265). Their training data contained species signal. The R4 defect is in
+the released code path only. The "consistent-with" sentence is withdrawn.
+
+**Scaling investigated and excluded as the explanation.** The loader scales
+each channel by its per-channel max, so the sparse species channels arrive
+with a spatial std of 1.277e-03 against 1.736e-01 for atmospheric — a 136x
+amplitude gap. This was a genuine threat to the ablation conclusion and was
+tested directly.
+
+**Matched-amplitude ablation (window 0, deterministic).** Species inputs
+multiplied so their amplitude matches or exceeds the atmospheric channels;
+species-output response over land, relative to output std:
+
+  x136 (amplitude matched):        0.0007%
+  x1360 (10x atmospheric):         0.0048%
+  x13599 (100x atmospheric):       0.0084%
+  reference, zeroing atmospheric:  5.87%
+
+The pathway is therefore not literally severed (unlike redlist, which is
+bitwise inert) but attenuated by roughly four orders of magnitude: species
+input raised a hundredfold ABOVE atmospheric amplitude still yields a
+response ~700x weaker than atmosphere. The "input too small to see"
+objection is foreclosed at every scale tested.
+
+**Revised claim for the paper.** Not "the model ignores species inputs"
+but: the species pathway is functionally attenuated to the point of
+irrelevance for prediction, and this is a property of the released
+checkpoint under conditions where the input reaches the model at
+comparable or greater amplitude than the inputs that do drive it. A
+plausible mechanism — per-channel max scaling delivering sparse count
+channels at ~1/136 amplitude under an MAE loss — is stated as a hypothesis
+about design consequences, not as a claim about their training.

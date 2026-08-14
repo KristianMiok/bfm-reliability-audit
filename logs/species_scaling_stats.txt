@@ -1,0 +1,11 @@
+species entries: 28
+  1340361: mean=1.61493e-05 std=0.00725244 min=0 max=15 valid=22,168,090 nan=0
+  1340503: mean=0.0146225 std=0.544577 min=0 max=419 valid=22,168,090 nan=0
+  1536449: mean=0.00707896 std=0.273723 min=0 max=270 valid=22,168,090 nan=0
+  1898286: mean=0.152241 std=3.12611 min=0 max=759 valid=22,168,090 nan=0
+  1920506: mean=0.15316 std=4.45716 min=0 max=2027 valid=22,168,090 nan=0
+
+mean : min=3.42835e-06 max=0.265474
+std  : min=0.00194659 max=4.54483
+max  : min=2 max=5050
+channels with max == 0 (i.e. entirely empty in their training data): 0/28
