@@ -862,3 +862,39 @@ modalities. Transferable design recommendations follow directly — reserved
 per-modality latent budgets, auxiliary reconstruction loss on the sparse
 branch, or modality dropout during training — each testable by the same
 protocol on the next model.
+
+---
+
+## 2026-08-13 — decisive signal test: fix justified; drift #6 (td no-op)
+
+**Drift #6.** `td_learning` in compute_loss is an algebraic no-op:
+|(pred - gt0) - (gt1 - gt0)| = |pred - gt1| identically. The flag that
+appears to implement temporal-difference learning changes nothing; the
+model is trained and evaluated as a LEVEL predictor of month m+2, with no
+residual path returning species(t) to the output.
+
+**Signal test (scripts/09_signal_test.py; 18 windows 2018-11..2020-06,
+scaled space, land cells; pre-stated interpretation branches in the script
+header).** MAE on species targets:
+
+  persistence  1.392e-04
+  zero         1.637e-04
+  climatology  1.638e-04
+  model        2.921e-04
+
+The released checkpoint is 2.10x worse than persistence and 1.79x worse
+than predicting zero everywhere; it beats persistence on 1 of 28 channels.
+Meanwhile the modality carries real signal: persistence/zero = 0.851 and
+corr(species(t), species(t+1)) = 0.650 on ever-occupied cells (n=178,054).
+Mechanism of the loss to zero: targets are 98.3% zeros, and the model emits
+a climate-driven ripple everywhere (output mean 1.4e-05, min -6.7e-02 for a
+non-negative count variable), accruing error on empty cells that the zero
+predictor does not. Note the evaluation includes training-era months and
+their own final-13 test windows: this is in-distribution failure on the
+flagship modality, on the exact objective the model was trained to
+minimise.
+
+**Branch invoked (pre-stated):** species(t) carries signal the model
+discards -> the defect interpretation stands; an architectural fix and a
+controlled retraining campaign are JUSTIFIED. Compute moves to Vega; this
+laptop-phase audit is complete.
