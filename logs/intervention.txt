@@ -1,0 +1,22 @@
+We scale the dataset True with normalize
+=== Part A: sensitivity to species presence, per scaling convention ===
+convention     input std       mean|d|    relative
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+max           1.2766e-03    1.6545e-09    0.0002%
+std           7.0406e-01    1.5476e-08    0.0018%
+zscore        7.0378e-01    1.4474e-08    0.0017%
+reference: zeroing atmospheric inputs moves the output 5.87% (median)
+
+=== Part B: where does the species signal die? ===
+hook points found: ['encoder.species_token_embeds', 'encoder.pre_perceiver_norm', 'encoder.perceiver_io', 'backbone', 'decoder.perceiver_io', 'decoder.species_token_proj']
+
+stage                                          shape   rel. change
+encoder.species_token_embeds          (1, 2800, 256)      1.9797%
+encoder.pre_perceiver_norm           (1, 64400, 256)      0.0016%
+encoder.perceiver_io                 (1, 64400, 256)      0.0001%
+backbone                             (1, 64400, 256)      0.0001%
+decoder.perceiver_io                   (1, 124, 256)      0.0000%
+decoder.species_token_proj            (1, 28, 44800)      0.0003%
+
+written data/interim/intervention.json
