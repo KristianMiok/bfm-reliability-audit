@@ -1,0 +1,24 @@
+We scale the dataset True with normalize
+windows: 18
+/Users/kristianmiok/Desktop/Papers/bfm-reliability-audit/.venv/lib/python3.14/site-packages/torch/nn/functional.py:5823: UserWarning: MPS: The constant padding of more than 3 dimensions is not currently supported natively. It uses View Ops default implementation to run. This may have performance implications. (Triggered internally at /Users/runner/work/pytorch/pytorch/aten/src/ATen/native/mps/operations/Pad.mm:567.)
+  return torch._C._nn.pad(input, pad, mode, value)
+  5/18
+  10/18
+  15/18
+
+=== MAE on species targets (scaled space, land cells) ===
+  persistence   1.392251e-04
+  zero          1.636571e-04
+  climatology   1.637755e-04
+  model         2.921415e-04
+
+model / best trivial baseline = 2.098x (MODEL LOSES)
+persistence / zero = 0.851x (species(t) carries signal)
+
+corr(species(t), species(t+1)) on cells ever occupied: 0.6503 (n=178,054)
+target sparsity: 98.3% of land cell-months are zero
+model output: min=-6.663e-02 max=2.837e-01 mean=1.436e-05
+target      : min=0.000e+00 max=1.000e+00 mean=1.637e-04
+
+per-species: model beats persistence on 1/28 channels
+saved data/interim/signal_test.npz
